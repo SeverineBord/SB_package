@@ -1,0 +1,163 @@
+---
+title: "Création de package avec Rstudio"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+### Introduction
+
+Supposons qu'on dispose de la fonction 
+
+```{r simple-OLS, echo=TRUE}
+OLS <- function(X,y) {
+  beta.hat <- chol2inv(chol(crossprod(X))) %*% crossprod(X,y)
+  beta.hat
+}
+```
+
+On souhaite 
+
+1. créer un package sous Rstudio,
+2. documenter cette fonction, 
+3. déposer le package sur github,
+4. écrire une version améliorée de cette fonction avec Rcpp
+
+## Création d'un package rudimentaire
+
+Créer un projet package via Rstudio: 
+  File -> New Project -> New Directory -> New Package with git repository
+
+Vous pouvez également utiliser directement la commande
+
+```{r, eval=FALSE}
+devtools::create("OLSfit")
+```
+
+### Exercice 1
+
+Effacer le fichier `hello.R`. Créer un fichier `OLS.R` contenant votre fonction.
+
+### Exercice 2
+
+Éditer le fichier `DESCRIPTION` de manière adéquate: modifier le titre, le nom de l'auteur, du mainteneur, la description.  Pour le nom de l'auteur, utiliser
+
+```{r, eval=FALSE}
+person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+```
+
+### Exercice 3
+
+Documenter la fonction `OLS` à l'aide de Roxygen2 : pour ce faire, compléter le code suivant et coller le dans l'entête de votre fichier `OLS.R`. La balise `@export` indique que cette fonction doit être rendu public à l'utilisateur. Lors de la compilation de la documentation, le fichier NAMESPACE sera amender en ce sens.
+
+```{r roxygen2, exercise=TRUE, exercise.lines = 10}
+#' Description of the function
+#' 
+#' @param  a paramter
+#' @return what is returned
+#' @examples
+#' @export 
+OLS <- function(X,y) {
+  beta.hat <- chol2inv(chol(crossprod(X))) %*% crossprod(X,y)
+  beta.hat
+}
+```
+
+```{r roxygen2-solution}
+#' Compute the OLS esstimator
+#' 
+#' @param X A matrix
+#' @param y A vector
+#' @return a vector of coefficients
+#' @examples
+#' n <- 100; p <- 10
+#' X <- matrix(rnorm(n*p), n, p)
+#' beta <- runif(p, 1, 2) * sample(c(-1,1), p, rep=TRUE)
+#' y <- X %*% beta + rnorm(n) 
+#' OLS(X,y)
+#' @export
+OLS <- function(X,y) {
+  beta.hat <- chol2inv(chol(crossprod(X))) %*% crossprod(X,y)
+  beta.hat
+}
+```
+
+Effacer le fichier `NAMESPACE` et lancer la commande 
+
+```{r, eval=FALSE}
+devtools::document()
+```
+
+pour générer les fichier d'aide et mettre à jour le `NAMESPACE`.
+
+### Exercice 4
+
+  * Contruire le package et l'installer. Ceci peut être fait simplement lorsqu'on dispose d'un projet Rstudio associé à un package à l'aide du raccourci `Ctrl + Shift + B` ou du bouton correspondant en haut à droite.
+
+  * Vérifier que le package et le code fonctionnent via l'exemple de votre fonction. 
+
+  * Vérifier que votre package est publibale ssur CRAN à l'aide du bouton Check ou `Ctrl + Shift + E`
+  
+## Intégration de code C++
+
+On souhaite accélérer le code en réalisant la aprtie coûteuse des calculs à l'aide d'un code C++.
+
+### Exercice 1
+
+Spécifier via Rstudio que vous aller dorénavant utiliser du code C++ à l'aide de la commande 
+
+```{r, eval = FALSE}
+devtools::use_rcpp()
+```
+
+Observez les modifications apportées à votre packages. Commentez.
+
+Créer un fichier `OLS-pkg.R` dans lequel vous intégrerez les lignes suivantes. Vous pouvez également compléter ce fichier pour écrire un texte de présentation générale de votre package qui apparaîtra en début de documentation.
+
+```{r}
+#' package OLSfit
+#' 
+#' Dans ce package, on trouve les fonctions trucs bidule et muche. Elles font ceci et cela. Les classes d'objets Robert et MItchoum font etc.
+#' 
+#' @name OLS-pkg
+#' @docType package
+#'
+#' @useDynLib OLSfit
+#' @importFrom Rcpp sourceCpp
+NULL
+```
+
+### Exercice 2
+
+Créer un fichier `OLS.cpp` dans le répertoire `src`. À l'aide d'[armadillo](http://arma.sourceforge.net), compléter le fichier suivant: 
+
+
+```{r OLScpp, exercise=TRUE, exercise.lines = 10, eval=FALSE}
+#include "RcppArmadillo.h"
+// [[Rcpp::depends(RcppArmadillo)]]
+NumericVector OLScpp(const arma::mat X, const arma::vec y) {
+
+}
+```
+
+```{r OLScpp-solution, eval=FALSE}
+#include "RcppArmadillo.h"
+// [[Rcpp::depends(RcppArmadillo)]]
+NumericVector OLScpp(const arma::mat X, const arma::vec y) {
+  return wrap( inv_sympd(X.t() * X) * X.t() * y ) ;
+}
+```
+
+Ajouter `RcppArmadillo` au champ LinkingTo du fichier `DESCRIPTION`.
+
+Enfin, faite un `build and reload` de votre package. Constater les fichiers nouvellement créer. Commenter.
+
+### Exercice 3
+
+Ouvrez le ficher `RcppExport.R`. À l'aide de son contenu, créer une nouvelle fonction `OLSfast` dans un nouveau fichier. Regénérer les fichiers de doc à l'aide de Roxygen2. Comparer `OLS` à `OLSfast` avec microbenchmark.
+
+
