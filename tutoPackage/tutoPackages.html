@@ -122,7 +122,7 @@ OLS &lt;- function(X,y) {
 <ul>
 <li><p>Contruire le package et l’installer. Lorsqu’on dispose d’un projet Rstudio associé à un package, ceci peut être fait simplement à l’aide du raccourci <code>Ctrl + Shift + B</code> ou du bouton correspondant en haut à droite.</p></li>
 <li><p>Vérifier que le package et le code fonctionnent via l’exemple de votre fonction.</p></li>
-<li><p>Vérifier que votre package est publibale sur <code>CRAN</code> à l’aide du bouton <code>Check</code> ou du raccourci <code>Ctrl + Shift + E</code>.</p></li>
+<li><p>Vérifier que votre package est publiable sur <code>CRAN</code> à l’aide du bouton <code>Check</code> ou du raccourci <code>Ctrl + Shift + E</code>.</p></li>
 </ul>
 </div>
 </div>
@@ -155,7 +155,9 @@ NULL</code></pre>
 <div class="tutorial-exercise" data-label="OLScpp" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="8">
 <pre class="text"><code>#include &quot;RcppArmadillo.h&quot;
 // [[Rcpp::depends(RcppArmadillo)]]
-NumericVector OLScpp(const arma::mat X, const arma::vec y) {
+
+// [[Rcpp::export]]
+Rcpp::NumericVector OLScpp(const arma::mat X, const arma::vec y) {
 
 }</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
@@ -163,6 +165,23 @@ NumericVector OLScpp(const arma::mat X, const arma::vec y) {
 <div class="tutorial-exercise-support" data-label="OLScpp-solution" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>#include &quot;RcppArmadillo.h&quot;
 // [[Rcpp::depends(RcppArmadillo)]]
+
+using namespace Rcpp;
+using namespace arma;
+
+//&#39; Compute the OLS esstimator
+//&#39;
+//&#39; @param X A matrix
+//&#39; @param y A vector
+//&#39; @return a vector of coefficients
+//&#39; @examples
+//&#39; n &lt;- 100; p &lt;- 10
+//&#39; X &lt;- matrix(rnorm(n*p), n, p)
+//&#39; beta &lt;- runif(p, 1, 2) * sample(c(-1,1), p, rep=TRUE)
+//&#39; y &lt;- X %*% beta + rnorm(n)
+//&#39; OLSfast(X,y)
+//&#39; @export
+// [[Rcpp::export]]
 NumericVector OLScpp(const arma::mat X, const arma::vec y) {
   return wrap( inv_sympd(X.t() * X) * X.t() * y ) ;
 }</code></pre>

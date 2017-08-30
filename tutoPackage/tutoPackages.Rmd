@@ -103,7 +103,7 @@ pour générer les fichiers d'aide et mettre à jour le `NAMESPACE`.
 
   * Vérifier que le package et le code fonctionnent via l'exemple de votre fonction.
 
-  * Vérifier que votre package est publibale sur `CRAN` à l'aide du bouton `Check` ou du raccourci `Ctrl + Shift + E`.
+  * Vérifier que votre package est publiable sur `CRAN` à l'aide du bouton `Check` ou du raccourci `Ctrl + Shift + E`.
   
 ## Intégration de code C++
 
@@ -144,7 +144,9 @@ Créez un fichier `OLS.cpp` dans le répertoire `src`. À l'aide d'[armadillo](h
 ```{r OLScpp, exercise=TRUE, exercise.lines = 8, eval=FALSE}
 #include "RcppArmadillo.h"
 // [[Rcpp::depends(RcppArmadillo)]]
-NumericVector OLScpp(const arma::mat X, const arma::vec y) {
+
+// [[Rcpp::export]]
+Rcpp::NumericVector OLScpp(const arma::mat X, const arma::vec y) {
 
 }
 ```
@@ -152,6 +154,23 @@ NumericVector OLScpp(const arma::mat X, const arma::vec y) {
 ```{r OLScpp-solution, eval=FALSE}
 #include "RcppArmadillo.h"
 // [[Rcpp::depends(RcppArmadillo)]]
+
+using namespace Rcpp;
+using namespace arma;
+
+//' Compute the OLS esstimator
+//'
+//' @param X A matrix
+//' @param y A vector
+//' @return a vector of coefficients
+//' @examples
+//' n <- 100; p <- 10
+//' X <- matrix(rnorm(n*p), n, p)
+//' beta <- runif(p, 1, 2) * sample(c(-1,1), p, rep=TRUE)
+//' y <- X %*% beta + rnorm(n)
+//' OLScpp(X,y)
+//' @export
+// [[Rcpp::export]]
 NumericVector OLScpp(const arma::mat X, const arma::vec y) {
   return wrap( inv_sympd(X.t() * X) * X.t() * y ) ;
 }
@@ -163,7 +182,7 @@ Enfin, faites un `build and reload` de votre package. Constatez les fichiers nou
 
 ### Exercice 4
 
-Ouvrez le ficher `RcppExport.R`. À l'aide de son contenu, créer une nouvelle fonction `OLSfast` dans un nouveau fichier. Regénérer les fichiers de doc à l'aide de Roxygen2. Comparer `OLS` à `OLSfast` avec microbenchmark.
+Ouvrez le ficher `RcppExport.R`. Regénérer les fichiers de doc à l'aide de Roxygen2. Comparer `OLS` à `OLScpp` avec microbenchmark.
 
 ### Exercice 5
 
