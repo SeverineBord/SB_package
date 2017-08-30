@@ -94,7 +94,7 @@ Effacez le fichier `NAMESPACE` et lancez la commande
 ```{r, eval=FALSE, echo=TRUE}
 devtools::document()
 ```
-
+dans la console R
 pour générer les fichiers d'aide et mettre à jour le `NAMESPACE`.
 
 ### Exercice 5
@@ -118,6 +118,8 @@ devtools::use_rcpp()
 ```
 
 Observez les modifications apportées à votre packages. Commentez.
+
+
 
 ### Exercice 2 
 
