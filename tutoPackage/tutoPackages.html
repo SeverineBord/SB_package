@@ -13,7 +13,7 @@
 <meta name="progressive" content="false" />
 <meta name="allow-skip" content="false" />
 
-<title>Création de package avec Rstudio</title>
+<title>CrÃ©ation de package avec Rstudio</title>
 
 
 <!-- highlightjs -->
@@ -48,14 +48,14 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h3>Introduction</h3>
 <p>L’objectif de ce petit tutoriel est</p>
 <ol style="list-style-type: decimal">
-<li>de créer un projeet <code>package</code> sous Rstudio,</li>
+<li>de crÃ©er un projeet <code>package</code> sous Rstudio,</li>
 <li>de se familiariser avec les outils de documentation,</li>
-<li>d’intégrer un code <code>C++</code>,</li>
-<li>de déposer un package sur github.</li>
+<li>d’intÃ©grer un code <code>C++</code>,</li>
+<li>de dÃ©poser un package sur github.</li>
 </ol>
 </div>
-<div id="section-creation-dun-package-rudimentaire" class="section level2">
-<h2>Création d’un package rudimentaire</h2>
+<div id="section-craation-dun-package-rudimentaire" class="section level2">
+<h2>CrÃ©ation d’un package rudimentaire</h2>
 <p>Supposons qu’on dispose de la fonction</p>
 <pre class="r"><code>OLS &lt;- function(X,y) {
   beta.hat &lt;- chol2inv(chol(crossprod(X))) %*% crossprod(X,y)
@@ -63,25 +63,25 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 }</code></pre>
 <div id="section-exercice-1" class="section level3">
 <h3>Exercice 1</h3>
-<p>Créer un projet package via Rstudio:</p>
+<p>CrÃ©er un projet package via Rstudio:</p>
 <blockquote>
 <p>File -&gt; New Project -&gt; New Directory -&gt; New Package with git repository</p>
 </blockquote>
-<p>Vous pouvez également utiliser directement la commande</p>
+<p>Vous pouvez Ã©galement utiliser directement la commande</p>
 <pre class="r"><code>devtools::create(&quot;OLSfit&quot;)</code></pre>
 </div>
 <div id="section-exercice-2" class="section level3">
 <h3>Exercice 2</h3>
-<p>Effacer le fichier <code>hello.R</code>. Créer un fichier <code>OLS.R</code> contenant votre fonction.</p>
+<p>Effacer le fichier <code>hello.R</code>. CrÃ©er un fichier <code>OLS.R</code> contenant votre fonction.</p>
 </div>
 <div id="section-exercice-3" class="section level3">
 <h3>Exercice 3</h3>
-<p>Éditer le fichier <code>DESCRIPTION</code> de manière adéquate: modifier le titre, le nom de l’auteur, du mainteneur, la description. Pour le nom de l’auteur, utiliser</p>
+<p>Ãditer le fichier <code>DESCRIPTION</code> de maniÃ¨re adÃ©quate: modifier le titre, le nom de l’auteur, du mainteneur, la description. Pour le nom de l’auteur, utiliser</p>
 <pre class="r"><code>person(&quot;First&quot;, &quot;Last&quot;, email = &quot;first.last@example.com&quot;, role = c(&quot;aut&quot;, &quot;cre&quot;))</code></pre>
 </div>
 <div id="section-exercice-4" class="section level3">
 <h3>Exercice 4</h3>
-<p>Documentez la fonction <code>OLS</code> à l’aide de <code>Roxygen2</code> : pour ce faire, complétez le code suivant et collez-le dans l’entête de votre fichier <code>OLS.R</code>. La balise <code>@export</code> indique que cette fonction doit être rendue public à l’utilisateur. Lors de la compilation de la documentation, le fichier <code>NAMESPACE</code> sera amendé en ce sens.</p>
+<p>Documentez la fonction <code>OLS</code> Ã  l’aide de <code>Roxygen2</code> : pour ce faire, complÃ©tez le code suivant et collez-le dans l’entÃªte de votre fichier <code>OLS.R</code>. La balise <code>@export</code> indique que cette fonction doit Ãªtre rendue public Ã  l’utilisateur. Lors de la compilation de la documentation, le fichier <code>NAMESPACE</code> sera amendÃ© en ce sens.</p>
 <div class="tutorial-exercise" data-label="roxygen2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="10">
 <pre class="text"><code>#&#39; Description of the function
 #&#39; 
@@ -115,29 +115,35 @@ OLS &lt;- function(X,y) {
 </div>
 <p>Effacez le fichier <code>NAMESPACE</code> et lancez la commande</p>
 <pre class="r"><code>devtools::document()</code></pre>
-<p>pour générer les fichiers d’aide et mettre à jour le <code>NAMESPACE</code>.</p>
+<p>pour gÃ©nÃ©rer les fichiers d’aide et mettre Ã  jour le <code>NAMESPACE</code>.</p>
 </div>
 <div id="section-exercice-5" class="section level3">
 <h3>Exercice 5</h3>
 <ul>
+<<<<<<< HEAD
 <li><p>Contruire le package et l’installer. Lorsqu’on dispose d’un projet Rstudio associé à un package, ceci peut être fait simplement à l’aide du raccourci <code>Ctrl + Shift + B</code> ou du bouton correspondant en haut à droite.</p></li>
 <li><p>Vérifier que le package et le code fonctionnent via l’exemple de votre fonction.</p></li>
 <li><p>Vérifier que votre package est publiable sur <code>CRAN</code> à l’aide du bouton <code>Check</code> ou du raccourci <code>Ctrl + Shift + E</code>.</p></li>
+=======
+<li><p>Contruire le package et l’installer. Lorsqu’on dispose d’un projet Rstudio associÃ© Ã  un package, ceci peut Ãªtre fait simplement Ã  l’aide du raccourci <code>Ctrl + Shift + B</code> ou du bouton correspondant en haut Ã  droite.</p></li>
+<li><p>VÃ©rifier que le package et le code fonctionnent via l’exemple de votre fonction.</p></li>
+<li><p>VÃ©rifier que votre package est publibale sur <code>CRAN</code> Ã  l’aide du bouton <code>Check</code> ou du raccourci <code>Ctrl + Shift + E</code>.</p></li>
+>>>>>>> bdb0008267a12ba882b95eb7cc566dff2067e800
 </ul>
 </div>
 </div>
-<div id="section-integration-de-code-c" class="section level2">
-<h2>Intégration de code C++</h2>
-<p>On souhaite accélérer le code en réalisant la partie coûteuse des calculs à l’aide d’un code <code>C++</code>.</p>
+<div id="section-intagration-de-code-c" class="section level2">
+<h2>IntÃ©gration de code C++</h2>
+<p>On souhaite accÃ©lÃ©rer le code en rÃ©alisant la partie coÃ»teuse des calculs Ã  l’aide d’un code <code>C++</code>.</p>
 <div id="section-exercice-1-1" class="section level3">
 <h3>Exercice 1</h3>
-<p>Spécifiez via Rstudio que vous allez dorénavant utiliser du code C++, à l’aide de la commande</p>
+<p>SpÃ©cifiez via Rstudio que vous allez dorÃ©navant utiliser du code C++, Ã  l’aide de la commande</p>
 <pre class="r"><code>devtools::use_rcpp()</code></pre>
-<p>Observez les modifications apportées à votre packages. Commentez.</p>
+<p>Observez les modifications apportÃ©es Ã  votre packages. Commentez.</p>
 </div>
 <div id="section-exercice-2-1" class="section level3">
 <h3>Exercice 2</h3>
-<p>Créer un fichier <code>OLS-pkg.R</code> dans lequel vous intégrerez les lignes suivantes. Vous pouvez également compléter ce fichier pour écrire un texte de présentation générale de votre package qui apparaîtra en début de documentation.</p>
+<p>CrÃ©er un fichier <code>OLS-pkg.R</code> dans lequel vous intÃ©grerez les lignes suivantes. Vous pouvez Ã©galement complÃ©ter ce fichier pour Ã©crire un texte de prÃ©sentation gÃ©nÃ©rale de votre package qui apparaÃ®tra en dÃ©but de documentation.</p>
 <pre class="r"><code>#&#39; package OLSfit
 #&#39; 
 #&#39; Dans ce package, on trouve les fonctions trucs bidule et muche. Elles font ceci et cela. Les classes d&#39;objets Robert et MItchoum font etc.
@@ -151,7 +157,7 @@ NULL</code></pre>
 </div>
 <div id="section-exercice-3-1" class="section level3">
 <h3>Exercice 3</h3>
-<p>Créez un fichier <code>OLS.cpp</code> dans le répertoire <code>src</code>. À l’aide d’<a href="http://arma.sourceforge.net">armadillo</a>, compléter le fichier suivant:</p>
+<p>CrÃ©ez un fichier <code>OLS.cpp</code> dans le rÃ©pertoire <code>src</code>. Ã l’aide d’<a href="http://arma.sourceforge.net">armadillo</a>, complÃ©ter le fichier suivant:</p>
 <div class="tutorial-exercise" data-label="OLScpp" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="8">
 <pre class="text"><code>#include &quot;RcppArmadillo.h&quot;
 // [[Rcpp::depends(RcppArmadillo)]]
@@ -187,11 +193,11 @@ NumericVector OLScpp(const arma::mat X, const arma::vec y) {
 }</code></pre>
 </div>
 <p>Ajoutez <code>RcppArmadillo</code> au champ <code>LinkingTo</code> du fichier <code>DESCRIPTION</code>.</p>
-<p>Enfin, faites un <code>build and reload</code> de votre package. Constatez les fichiers nouvellement créer. Commentez.</p>
+<p>Enfin, faites un <code>build and reload</code> de votre package. Constatez les fichiers nouvellement crÃ©er. Commentez.</p>
 </div>
 <div id="section-exercice-4-1" class="section level3">
 <h3>Exercice 4</h3>
-<p>Ouvrez le ficher <code>RcppExport.R</code>. À l’aide de son contenu, créer une nouvelle fonction <code>OLSfast</code> dans un nouveau fichier. Regénérer les fichiers de doc à l’aide de Roxygen2. Comparer <code>OLS</code> à <code>OLSfast</code> avec microbenchmark.</p>
+<p>Ouvrez le ficher <code>RcppExport.R</code>. Ã l’aide de son contenu, crÃ©er une nouvelle fonction <code>OLSfast</code> dans un nouveau fichier. RegÃ©nÃ©rer les fichiers de doc Ã  l’aide de Roxygen2. Comparer <code>OLS</code> Ã  <code>OLSfast</code> avec microbenchmark.</p>
 </div>
 <div id="section-exercice-5-1" class="section level3">
 <h3>Exercice 5</h3>
@@ -235,7 +241,7 @@ output$`tutorial-exercise-OLScpp-output` <- renderUI({
 
 <!-- begin doc-metadata -->
 <div id="doc-metadata">
-<h2 class="title toc-ignore" style="display:none;">Création de package avec Rstudio</h2>
+<h2 class="title toc-ignore" style="display:none;">CrÃ©ation de package avec Rstudio</h2>
 </div>
 <!-- end doc-metadata -->
 
