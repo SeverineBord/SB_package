@@ -14,5 +14,5 @@
 
 OLS <- function(X,y) {
   beta.hat = chol2inv(chol(crossprod(X))) %*% crossprod(X,y)
-  beta.hat
+  return(beta.hat)
 }
